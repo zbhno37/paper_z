@@ -5,6 +5,7 @@ from __future__ import division
 import numpy as np
 import random
 import sys
+from datetime import datetime
 
 MAX_INT = 99999999999999
 
@@ -279,6 +280,10 @@ def gradedecentBaise(data):
         grad += gradV ** 2
     return data,grad * data.speed
 
+def log(logstr, writer = sys.stdout):
+    writer.write("%s\t%s\n" % (str(datetime.now()), logstr))
+    writer.flush()
+
 def myPrint(level,*args):
     if type(level) != int:
         print "error in myprint "
@@ -289,7 +294,7 @@ def myPrint(level,*args):
         return
     message = [str(arg) for arg in args]
     message = " ".join(message)
-    print message
+    log(message)
 
 
 def output(dataName, outPre, data):
@@ -321,7 +326,7 @@ def output(dataName, outPre, data):
 if __name__ ==  "__main__":
 
     if len(sys.argv) < 2:
-        print("error in argv")
+        myPrint(0, "error in argv")
         sys.exit(1)
     argvDic = {}
     for  i in  range(1,len(sys.argv),2):
@@ -346,7 +351,7 @@ if __name__ ==  "__main__":
     minCostSum = 0
     minCost = MAX_INT
     count = 0
-
+    myPrint(0,'begin...')
     for i in range(numOfTrainTime):
         data = myData(dataName,trainFileName,speed,regUser,regItem,regBaise,K,myPrint)
         data.readData()
