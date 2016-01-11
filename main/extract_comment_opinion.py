@@ -44,11 +44,14 @@ def main():
     posTagger = PosTagger()
     nerTagger = NerTagger()
 
-    for text in sys.stdin:
+    #for text in sys.stdin:
+    if True:
+        text = '我很喜欢她家的星冰乐,味道真的不错，酸菜鱼一般。'
         sentence = [x.encode('utf-8') for x in jieba.cut(text)]
         pos = get_pos_tag(posTagger, sentence)
         ner = get_ner_tag(nerTagger, sentence, pos)
-
+        print pos
+        print ner
         #out_ls = []
         #for i, word in enumerate(sentence):
             #out_ls.append('%s/%s/%s' % (word, pos[i], ner[i]))
