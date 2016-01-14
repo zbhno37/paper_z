@@ -34,35 +34,35 @@ class EnvirServExtractor:
                 stop_word.add(line.strip())
         return stop_word
 
-    def extract(self, sentence):
-        # return list of words
-        # [
-        # [w1, w2, w3],
-        # ]
-        res = []
-        sent = None
-        for word in self.keywords:
-            if word in sentence:
-                if not sent:
-                    sent = [x.encode('utf-8') for x in jieba.cut(sentence)]
-                indexes = self.find_all(sent, word)
-                for index in indexes:
-                    candidate = []
-                    for i in range(4):
-                        j = index + i - 4
-                        if j >= 0 and sent[j] not in self.stop_word and sent[j] in self.keywords[word]['pre']:
-                            candidate.append(sent[j])
-                    candidate.append(word)
-                    for i in range(4):
-                        j = index + i + 1
-                        if j < len(sent) and sent[j] not in self.stop_word and sent[j] in self.keywords[word]['post']:
-                            candidate.append(sent[j])
-                    if len(candidate) > 1:
-                        # exclude word itself
-                        res.append(candidate)
-        return res
+#    def extract(self, sentence):
+#        # return list of words
+#        # [
+#        # [w1, w2, w3],
+#        # ]
+#        res = []
+#        sent = None
+#        for word in self.keywords:
+#            if word in sentence:
+#                if not sent:
+#                    sent = [x.encode('utf-8') for x in jieba.cut(sentence)]
+#                indexes = self.find_all(sent, word)
+#                for index in indexes:
+#                    candidate = []
+#                    for i in range(4):
+#                        j = index + i - 4
+#                        if j >= 0 and sent[j] not in self.stop_word and sent[j] in self.keywords[word]['pre']:
+#                            candidate.append(sent[j])
+#                    candidate.append(word)
+#                    for i in range(4):
+#                        j = index + i + 1
+#                        if j < len(sent) and sent[j] not in self.stop_word and sent[j] in self.keywords[word]['post']:
+#                            candidate.append(sent[j])
+#                    if len(candidate) > 1:
+#                        # exclude word itself
+#                        res.append(candidate)
+#        return res
 
-    def extract_pos(self, sentence):
+    def extract(self, sentence):
         # return list of words
         # [
         # [w1, w2, w3],
@@ -115,7 +115,7 @@ def process(filename):
                 logging.info(count)
             count += 1
             content = line['content']
-            res = extractor.extract_pos(content)
+            res = extractor.extract(content)
             if res:
                 fout.write('%s\n' % content)
                 for each in res:
