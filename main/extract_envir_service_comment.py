@@ -104,7 +104,7 @@ class EnvirServExtractor:
         return res
 
 def process(filename):
-    fout = file('../../paper/data/dianping/envir_service.res', 'w')
+    fout = file('../../paper/data/dianping/envir_service.pos.res', 'w')
     count = 0
     extractor = EnvirServExtractor()
     import csv
@@ -115,7 +115,7 @@ def process(filename):
                 logging.info(count)
             count += 1
             content = line['content']
-            res = extractor.extract(content)
+            res = extractor.extract_pos(content)
             if res:
                 fout.write('%s\n' % content)
                 for each in res:
